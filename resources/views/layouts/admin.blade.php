@@ -11,7 +11,7 @@
 
   {{-- Style --}}
   @stack('prepend-style')
-  @include('includes.style')
+  @include('includes.style-admin')
   @stack('addon-style')
   {{-- End Style --}}
 </head>
@@ -21,13 +21,13 @@
     <div class="page-dashboard">
         <div class="d-flex" id="wrapper" data-aos="fade-right">
         <!--- Sidebar -->
-        @include('includes.sidebar-dashboard')
+        @include('includes.sidebar-admin')
         <!--- End Sidebar -->
 
         <!--- Page Content -->
         <div id="page-content-wrapper">
             <!--- Top Navbar -->
-            @include('includes.navbar-dashboard')
+            @include('includes.navbar-admin')
             <!--- End Top Navbar -->
 
             <!--- Section Content -->
@@ -39,7 +39,7 @@
 
     <!-- Bootstrap core JavaScript -->
     @stack('prepend-script')
-    @include('includes.script-dashboard')
+    @include('includes.script-admin')
     @stack('addon-script')
 </body>
 
