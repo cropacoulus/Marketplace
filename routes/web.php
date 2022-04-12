@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index'])->name('categories');
+Route::get('/category/{id}', [App\Http\Controllers\CategoryController::class, 'detail'])->name('categories-detail');
 Route::get('/details/{id}', [App\Http\Controllers\DetailController::class, 'index'])->name('details');
 Route::get('/cart/{id}', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
 Route::get('/checkout/{id}', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
