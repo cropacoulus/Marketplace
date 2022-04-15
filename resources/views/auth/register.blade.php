@@ -35,8 +35,10 @@
                                 <label>Email Address</label>
                                 <input id="email"
                                     v-model="email"
+                                    @change="checkEmail()"
                                     type="email" 
                                     class="form-control @error('email') is-invalid @enderror" 
+                                    :class="{ 'is-invalid': this.email_unavailable }"
                                     name="email" 
                                     value="{{ old('email') }}" 
                                     required 
@@ -124,7 +126,10 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-success btn-block mt-4">
+                            <button type="submit" 
+                                class="btn btn-success btn-block mt-4"
+                                :disabled="this.email_unavailable"    
+                            >
                                 Sign Up Now
                             </button>
                             <a href="{{ route('login') }}" class="btn btn-signup btn-block mt-2">
@@ -141,6 +146,7 @@
 @push('addon-script')
     <script src="{{ asset('vendor/vue/vue.js') }}"></script>
     <script src="https://unpkg.com/vue-toasted"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         Vue.use(Toasted);
 
@@ -148,21 +154,50 @@
             el: "#register",
             mounted() {
                 AOS.init();
-                // this.$toasted.error(
-                // "Maaf, tampaknya email sudah terdaftar pada sistem kami.",
-                // {
-                //     position: "top-center",
-                //     className: "rounded",
-                //     duration: 3000,
-                // }
-                // );
             },
-            data: {
-                name: "Muhammad Rifki",
-                email: "rifkipanglima9@gmail.com",
-                password: "",
-                is_store_open: true,
-                store_name: "",
+            methods: {
+                checkEmail: function() {
+                    var self = this; //dipakai untuk mengakses this dari method ini
+
+                    axios.get('{{ route('api-register-check') }}', {
+                        params: {
+                            email: this.email
+                        }
+                    })
+                        .then(function (response) {
+                            if (response.data == 'Available') {
+                                self.$toasted.show(
+                                    "Email tersedia! Silahkan Lanjutkan proses registrasi",
+                                    {
+                                        position: "top-center",
+                                        className: "rounded",
+                                        duration: 3000,
+                                    }
+                                );
+                                self.email_unavailable = false;
+                            } else {
+                                self.$toasted.error(
+                                    "Maaf, tampaknya email sudah terdaftar pada sistem kami.",
+                                    {
+                                        position: "top-center",
+                                        className: "rounded",
+                                        duration: 1500,
+                                    }
+                                );
+                                self.email_unavailable = true;
+                            }
+                            console.log(response);
+                        });
+                }
+            },
+            data() {
+                return {
+                    name: "Muhammad Rifki",
+                    email: "rifkipanglima9@gmail.com",
+                    is_store_open: true,
+                    store_name: "",
+                    email_unavailable: false,
+                }
             },
         });
     </script>
