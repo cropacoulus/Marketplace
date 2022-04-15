@@ -192,8 +192,8 @@
             },
             data() {
                 return {
-                    name: "Muhammad Rifki",
-                    email: "rifkipanglima9@gmail.com",
+                    name: "",
+                    email: "",
                     is_store_open: true,
                     store_name: "",
                     email_unavailable: false,
