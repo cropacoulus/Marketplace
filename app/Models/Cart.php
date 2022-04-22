@@ -22,4 +22,8 @@ class Cart extends Model
     public function user(){
         return $this->belongsTo(User::class, 'users_id', 'id'); //relasi untuk menentukan siapa yang membeli produk
     }
+
+    // public function getTotalPriceAttribute(){
+    //     return $this->product->price * $this->quantity;
+    // }
 }

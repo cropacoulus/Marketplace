@@ -22,8 +22,14 @@ Route::get('/category/{id}', [App\Http\Controllers\CategoryController::class, 'd
 Route::get('/details/{id}', [App\Http\Controllers\DetailController::class, 'index'])->name('details');
 Route::post('/details/{id}', [App\Http\Controllers\DetailController::class, 'add'])->name('detail-add');
 
+//cart
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
-Route::get('/checkout/{id}', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
+Route::post('/cart/increase/{id}', [App\Http\Controllers\CartController::class, 'cartIncrement'])->name('cart-increment');
+Route::post('/cart/decrease/{id}', [App\Http\Controllers\CartController::class, 'cartDecrement'])->name('cart-decrement');
+Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'delete'])->name('cart-delete');
+
+
+Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
 Route::get('/success', [App\Http\Controllers\CheckoutController::class, 'success'])->name('success');
 
 Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::class, 'success'])->name('success');
