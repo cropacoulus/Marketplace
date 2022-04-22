@@ -25,11 +25,17 @@ class DetailController extends Controller
     {
         $data = [
             'products_id' => $id,
-            'users_id' => Auth::user()->id,
+            'users_id' => Auth::user()->id
         ];
 
-        Cart::create($data);
+        if(Cart::where($data)->exists()){ // check jika produk sudah ada di cart
+            $cart = Cart::where($data)->first(); // mengambil data cart berdasarkan produk yang sudah ada
+            $cart->quantity += 1; // tambahkan quantity
+            $cart->save(); // simpan data
+        }else{
+            Cart::create($data); // jika produk belum ada di cart, maka tambahkan
+        }
 
-        return redirect()->route('cart');
+        return redirect()->route('cart'); // redirect ke cart
     }
 }
